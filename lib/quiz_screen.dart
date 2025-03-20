@@ -1,6 +1,7 @@
 import 'package:advanced_basics/content_main.dart';
 import 'package:advanced_basics/data/questions.dart';
 import 'package:advanced_basics/quiz.dart';
+import 'package:advanced_basics/results_screen.dart';
 import 'package:flutter/material.dart';
 
 Alignment begin = Alignment.topLeft;
@@ -45,10 +46,17 @@ class _QuizScreenState extends State<QuizScreen> {
     if (selectedAnswers.length >= questions.length) {
 
       setState(() {
-        activeScreen = ContentMain(switchScreen: switchScreen);
+        activeScreen = ResultScreen(chosenAnswers: selectedAnswers, restartQuiz: restartQuiz );
       });
 
     }
+  }
+
+  void restartQuiz() {
+    setState(() {
+      selectedAnswers.clear();
+      activeScreen = Quiz(onSelectedAnswer: chooseAnswer);
+    });
   }
 
   @override
@@ -61,7 +69,7 @@ class _QuizScreenState extends State<QuizScreen> {
             gradient: LinearGradient(
               colors:
                   widget
-                      .colors, // Accede a la lista de colores desde widget.colors
+                      .colors,
               begin: begin,
               end: end,
             ),
